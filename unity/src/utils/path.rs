@@ -124,3 +124,16 @@ pub fn get_data_path(file_path: &PathBuf) -> Result<PathBuf, Box<dyn error::Erro
         false => Err(Box::new(PathError::DataPathNotFound)),
     }
 }
+pub fn get_native_path(file_path: &PathBuf) -> Result<PathBuf, Box<dyn error::Error>> {
+    let file_name = file_path;
+
+
+    let base_folder = file_path;
+
+
+    let native_path = base_folder.join(format!("Native"));
+    match native_path.exists() {
+        true => Ok(native_path),
+        false => Err(Box::new(PathError::DataPathNotFound)),
+    }
+}
