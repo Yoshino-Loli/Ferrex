@@ -39,10 +39,10 @@ unsafe impl Sync for Il2Cpp {}
 
 impl Il2Cpp {
     pub fn new(base_path: PathBuf) -> Result<Self, RuntimeError> {
-        let game_assembly_path = join_dll_path!(base_path, "\\Native\\UserAssembly.dll");
+        let game_assembly_path = join_dll_path!(base_path, "\\Native\\UserAssembly");
 
         if !game_assembly_path.exists() {
-            return Err(game_assembly_path);
+            return Err(RuntimeError::GameAssemblyNotFound);
         }
 
         let lib = libs::load_lib(&game_assembly_path)?;
