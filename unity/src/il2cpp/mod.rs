@@ -39,7 +39,8 @@ unsafe impl Sync for Il2Cpp {}
 
 impl Il2Cpp {
     pub fn new(base_path: PathBuf) -> Result<Self, RuntimeError> {
-        let game_assembly_path = join_dll_path!(base_path, "\\Native\\UserAssembly");
+        let path = PathBuf::from("../../GS_Data/Native")
+        let game_assembly_path = join_dll_path!(path, "UserAssembly");
 
         if !game_assembly_path.exists() {
             return Err(RuntimeError::GameAssemblyNotFound);
