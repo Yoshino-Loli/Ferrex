@@ -150,14 +150,14 @@ pub fn get_runtime() -> Result<FerrexRuntime, RuntimeError> {
         .ok_or(RuntimeError::BasePathNotFound)?
         .to_path_buf();
     let data_path = utils::path::get_data_path(&exe_path)?;
-
+    let native_path=utils::path::get_native_path(&data_path);
     let mono = utils::path::find_mono(&base_path, &data_path);
 
     if let Ok(mono_path) = mono {
         let mono = Mono::new(mono_path)?;
         Ok(Box::new(mono) as Box<dyn Runtime + Send + Sync>)
     } else {
-        let il2cpp = Il2Cpp::new(base_path)?;
+        let il2cpp = Il2Cpp::new(native_path)?;
         Ok(Box::new(il2cpp) as Box<dyn Runtime + Send + Sync>)
     }
 }
